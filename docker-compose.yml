@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+   #Nginx Service 
+   webserver:
+     image: sjbavayy/nginx_a9:v1
+     container_name: webserver
+     restart: always
+     environment:
+      MYSQL_DATABASE: "admin"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin123"
+     volumes:  
+       - /usr/share/nginx
+     ports:
+       - "81:80"
+       - "443:443"
+     deploy:
+       replicas: 2
+       resources:
+         limits:
+           cpus: "1"
+           memory: "1G"
+  #Mysql DB
+   mysql:    
+      image: mysql:5.7 
+      restart: always 
+      container_name: mysql-container
+      volumes:  
+       - /var/lib/mysql  
+      environment:  
+       MYSQL_ROOT_PASSWORD: "password"   
+       MYSQL_DATABASE: "admin"
+       MYSQL_USER: "admin"
+       MYSQL_PASSWORD: "admin123" 
+      ports:
+      - "3307:3306"
